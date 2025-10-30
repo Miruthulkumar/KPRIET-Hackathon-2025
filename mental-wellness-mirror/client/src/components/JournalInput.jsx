@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import VoiceRecorder from "./VoiceRecorder";
 import InsightCard from "./InsightCard";
+import CopingRecommendations from "./CopingRecommendations";
 import { analyzeText, analyzeVoice, createEntry } from "../api/api";
 
 const JournalInput = () => {
@@ -253,6 +254,14 @@ const JournalInput = () => {
             anxietyScore={result?.anxietyScore}
             loading={loading}
           />
+
+          {!loading && result && (
+            <CopingRecommendations
+              stressScore={result?.stressScore}
+              anxietyScore={result?.anxietyScore}
+              mood={result?.mood}
+            />
+          )}
 
           {saved && (
             <motion.div

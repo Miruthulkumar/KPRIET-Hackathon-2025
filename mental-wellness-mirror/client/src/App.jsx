@@ -28,7 +28,7 @@ function Navigation() {
             >
               <div className="text-3xl breathe">🌸</div>
               <h1 className="text-2xl font-light text-gray-700 tracking-wide">
-                Inner <span className="font-medium text-[#b8d4c5]">Sanctuary</span>
+                Haven 
               </h1>
             </motion.div>
           </Link>
