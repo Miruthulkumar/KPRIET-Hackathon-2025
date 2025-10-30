@@ -94,19 +94,16 @@ entrySchema.post('findOneAndUpdate', function(doc) {
 
 // Helper function to decrypt entry fields
 function decryptEntry(doc) {
-  try {
-    if (doc.content) {
-      doc.content = decrypt(doc.content);
-    }
-    if (doc.transcript) {
-      doc.transcript = decrypt(doc.transcript);
-    }
-    if (doc.insight) {
-      doc.insight = decrypt(doc.insight);
-    }
-  } catch (error) {
-    console.error('Error decrypting entry:', error);
-    // Keep encrypted data if decryption fails
+  // Decrypt fields - the decrypt function now handles backward compatibility
+  // and will return plain text as-is if it's not encrypted
+  if (doc.content) {
+    doc.content = decrypt(doc.content);
+  }
+  if (doc.transcript) {
+    doc.transcript = decrypt(doc.transcript);
+  }
+  if (doc.insight) {
+    doc.insight = decrypt(doc.insight);
   }
 }
 
