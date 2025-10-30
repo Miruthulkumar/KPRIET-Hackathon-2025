@@ -1,6 +1,9 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import BreathingExercise from "./BreathingExercise";
 
 const CopingRecommendations = ({ stressScore, anxietyScore, mood }) => {
+  const [showBreathing, setShowBreathing] = useState(false);
   // Generate recommendations based on scores
   const getRecommendations = () => {
     const recommendations = [];
@@ -14,7 +17,8 @@ const CopingRecommendations = ({ stressScore, anxietyScore, mood }) => {
         description: "Try the 4-7-8 technique: Breathe in for 4 counts, hold for 7, exhale for 8. Repeat 3-4 times.",
         action: "Start Breathing",
         color: "from-blue-100 to-blue-200",
-        priority: "high"
+        priority: "high",
+        interactive: true
       });
 
       recommendations.push({
@@ -188,12 +192,30 @@ const CopingRecommendations = ({ stressScore, anxietyScore, mood }) => {
                   <p className="text-sm text-gray-600 font-light leading-relaxed">
                     {rec.description}
                   </p>
+                  {rec.interactive && (
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setShowBreathing(true)}
+                      className="mt-3 px-4 py-2 bg-white hover:bg-gray-50 text-gray-700 rounded-full text-sm font-medium transition-all shadow-sm flex items-center gap-2"
+                    >
+                      <span>🫁</span>
+                      <span>{rec.action}</span>
+                    </motion.button>
+                  )}
                 </div>
               </div>
             </div>
           </motion.div>
         ))}
       </div>
+
+      {/* Breathing Exercise Modal */}
+      <AnimatePresence>
+        {showBreathing && (
+          <BreathingExercise onClose={() => setShowBreathing(false)} />
+        )}
+      </AnimatePresence>
 
       {/* Emergency Resources for Very High Scores */}
       {(stressScore > 80 || anxietyScore > 80) && (
