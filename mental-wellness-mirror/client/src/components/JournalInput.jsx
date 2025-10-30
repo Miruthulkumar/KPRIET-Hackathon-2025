@@ -33,6 +33,8 @@ const JournalInput = () => {
         content: textContent,
         mood: analysis.mood,
         insight: analysis.insight,
+        stressScore: analysis.stressScore,
+        anxietyScore: analysis.anxietyScore,
       });
 
       setSaved(true);
@@ -79,6 +81,8 @@ const JournalInput = () => {
         transcript: analysis.transcript,
         mood: analysis.mood,
         insight: analysis.insight,
+        stressScore: analysis.stressScore,
+        anxietyScore: analysis.anxietyScore,
       });
 
       setSaved(true);
@@ -245,6 +249,8 @@ const JournalInput = () => {
           <InsightCard
             mood={result?.mood}
             insight={result?.insight}
+            stressScore={result?.stressScore}
+            anxietyScore={result?.anxietyScore}
             loading={loading}
           />
 

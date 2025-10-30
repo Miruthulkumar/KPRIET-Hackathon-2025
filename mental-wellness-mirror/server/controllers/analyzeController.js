@@ -40,8 +40,10 @@ export const analyzeText = async (req, res) => {
           content: `You are a compassionate mental wellness assistant. Analyze the user's journal entry and provide:
 1. A one-word mood (e.g., anxious, calm, stressed, happy, sad, reflective, energized)
 2. A brief, warm, humanlike insight (2-3 sentences) that acknowledges their feelings and offers gentle encouragement or suggestions.
+3. A stress score from 0-100 (0 = completely relaxed, 100 = extremely stressed)
+4. An anxiety score from 0-100 (0 = no anxiety, 100 = severe anxiety)
 
-Respond in JSON format: {"mood": "...", "insight": "..."}`,
+Respond in JSON format: {"mood": "...", "insight": "...", "stressScore": 0-100, "anxietyScore": 0-100}`,
         },
         {
           role: "user",
@@ -121,8 +123,10 @@ export const analyzeVoice = async (req, res) => {
           content: `You are a compassionate mental wellness assistant. Analyze the user's voice journal transcript and provide:
 1. A one-word mood (e.g., anxious, calm, stressed, happy, sad, reflective, energized)
 2. A brief, warm, humanlike insight (2-3 sentences) that acknowledges their feelings and offers gentle encouragement or suggestions.
+3. A stress score from 0-100 (0 = completely relaxed, 100 = extremely stressed)
+4. An anxiety score from 0-100 (0 = no anxiety, 100 = severe anxiety)
 
-Respond in JSON format: {"mood": "...", "insight": "..."}`,
+Respond in JSON format: {"mood": "...", "insight": "...", "stressScore": 0-100, "anxietyScore": 0-100}`,
         },
         {
           role: "user",

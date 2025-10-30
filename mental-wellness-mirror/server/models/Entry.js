@@ -30,6 +30,18 @@ const entrySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  stressScore: {
+    type: Number,
+    min: 0,
+    max: 100,
+    required: true,
+  },
+  anxietyScore: {
+    type: Number,
+    min: 0,
+    max: 100,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
