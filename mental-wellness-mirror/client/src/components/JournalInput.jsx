@@ -13,8 +13,6 @@ const JournalInput = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [saved, setSaved] = useState(false);
-  const [showBreathing, setShowBreathing] = useState(false);
-  const [shouldShowBreathingPrompt, setShouldShowBreathingPrompt] = useState(false);
 
   const handleTextSubmit = async () => {
     if (!textContent.trim()) {
@@ -30,12 +28,6 @@ const JournalInput = () => {
       // Analyze text
       const analysis = await analyzeText(textContent);
       setResult(analysis);
-
-      // Check if breathing exercise should be recommended
-      const avgScore = (analysis.stressScore + analysis.anxietyScore) / 2;
-      if (avgScore > 50) {
-        setShouldShowBreathingPrompt(true);
-      }
 
       // Save entry
       await createEntry({
@@ -85,12 +77,6 @@ const JournalInput = () => {
       const analysis = await analyzeVoice(audioBlob);
       setResult(analysis);
 
-      // Check if breathing exercise should be recommended
-      const avgScore = (analysis.stressScore + analysis.anxietyScore) / 2;
-      if (avgScore > 50) {
-        setShouldShowBreathingPrompt(true);
-      }
-
       // Save entry
       await createEntry({
         entryType: "voice",
@@ -129,16 +115,6 @@ const JournalInput = () => {
     setAudioBlob(null);
     setResult(null);
     setSaved(false);
-    setShouldShowBreathingPrompt(false);
-  };
-
-  const handleStartBreathing = () => {
-    setShowBreathing(true);
-    setShouldShowBreathingPrompt(false);
-  };
-
-  const handleSkipBreathing = () => {
-    setShouldShowBreathingPrompt(false);
   };
 
   return (
@@ -316,67 +292,8 @@ const JournalInput = () => {
               </motion.button>
             </motion.div>
           )}
-
-          {/* Breathing Exercise Recommendation */}
-          {!loading && result && shouldShowBreathingPrompt && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="peaceful-card p-8 border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-purple-50"
-            >
-              <div className="text-center space-y-4">
-                <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="text-5xl"
-                >
-                  🫁
-                </motion.div>
-                
-                <h3 className="text-2xl font-light text-gray-800">
-                  Your Mind Needs a Moment
-                </h3>
-                
-                <p className="text-gray-600 font-light max-w-md mx-auto">
-                  Based on your stress and anxiety levels, we recommend taking a 2-minute breathing exercise right now.
-                  It can help calm your mind and reduce tension.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleStartBreathing}
-                    className="calm-button-primary px-8 py-4 text-lg"
-                  >
-                    <span className="flex items-center gap-2">
-                      <span>🫁</span>
-                      <span>Start Breathing Exercise</span>
-                    </span>
-                  </motion.button>
-                  
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleSkipBreathing}
-                    className="px-8 py-4 bg-white hover:bg-gray-50 text-gray-600 rounded-full font-medium transition-all shadow-sm"
-                  >
-                    Maybe Later
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          )}
         </motion.div>
       )}
-
-      {/* Breathing Exercise Modal */}
-      <AnimatePresence>
-        {showBreathing && (
-          <BreathingExercise onClose={() => setShowBreathing(false)} />
-        )}
-      </AnimatePresence>
     </div>
   );
 };

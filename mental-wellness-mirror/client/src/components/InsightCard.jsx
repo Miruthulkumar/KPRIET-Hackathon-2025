@@ -1,6 +1,9 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import BreathingExercise from "./BreathingExercise";
 
 const InsightCard = ({ mood, insight, stressScore, anxietyScore, loading }) => {
+  const [showBreathing, setShowBreathing] = useState(false);
   const getMoodEmoji = (moodText) => {
     if (!moodText) return "🌸";
     
@@ -222,6 +225,49 @@ const InsightCard = ({ mood, insight, stressScore, anxietyScore, loading }) => {
         </motion.div>
       )}
 
+      {/* Breathing Exercise Button - Show when scores are moderate or high */}
+      {(stressScore > 40 || anxietyScore > 40) && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShowBreathing(true)}
+            className="w-full peaceful-card p-6 bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200 hover:border-blue-300 transition-all"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <motion.span
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="text-4xl"
+                >
+                  🫁
+                </motion.span>
+                <div className="text-left">
+                  <h4 className="text-lg font-medium text-gray-800">
+                    Try a Breathing Exercise
+                  </h4>
+                  <p className="text-sm text-gray-600 font-light">
+                    A 2-minute guided meditation to help calm your mind
+                  </p>
+                </div>
+              </div>
+              <motion.span
+                animate={{ x: [0, 5, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+                className="text-2xl"
+              >
+                →
+              </motion.span>
+            </div>
+          </motion.button>
+        </motion.div>
+      )}
+
       {/* Insight Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -266,6 +312,13 @@ const InsightCard = ({ mood, insight, stressScore, anxietyScore, loading }) => {
           </motion.div>
         </div>
       </motion.div>
+
+      {/* Breathing Exercise Modal */}
+      <AnimatePresence>
+        {showBreathing && (
+          <BreathingExercise onClose={() => setShowBreathing(false)} />
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
