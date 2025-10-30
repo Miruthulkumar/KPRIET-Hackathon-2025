@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const InsightCard = ({ mood, insight, loading }) => {
+const InsightCard = ({ mood, insight, stressScore, anxietyScore, loading }) => {
   const getMoodEmoji = (moodText) => {
     if (!moodText) return "🌸";
     
@@ -38,6 +38,42 @@ const InsightCard = ({ mood, insight, loading }) => {
     if (lowerMood.includes("hope")) return "from-[#c8e3f5] to-[#b8d3e5]";
     
     return "from-[#b8d4c5] to-[#c8e3f5]";
+  };
+
+  const getScoreEmoji = (score) => {
+    if (score === undefined || score === null) return "🌸";
+    if (score <= 20) return "😌"; // Very low
+    if (score <= 40) return "🙂"; // Low
+    if (score <= 60) return "😐"; // Moderate
+    if (score <= 80) return "😟"; // High
+    return "😰"; // Very high
+  };
+
+  const getScoreColor = (score) => {
+    if (score === undefined || score === null) return "text-gray-500";
+    if (score <= 20) return "text-green-600";
+    if (score <= 40) return "text-green-500";
+    if (score <= 60) return "text-yellow-600";
+    if (score <= 80) return "text-orange-600";
+    return "text-red-600";
+  };
+
+  const getScoreLabel = (score) => {
+    if (score === undefined || score === null) return "Unknown";
+    if (score <= 20) return "Very Low";
+    if (score <= 40) return "Low";
+    if (score <= 60) return "Moderate";
+    if (score <= 80) return "High";
+    return "Very High";
+  };
+
+  const getScoreBarColor = (score) => {
+    if (score === undefined || score === null) return "bg-gray-300";
+    if (score <= 20) return "bg-green-500";
+    if (score <= 40) return "bg-green-400";
+    if (score <= 60) return "bg-yellow-500";
+    if (score <= 80) return "bg-orange-500";
+    return "bg-red-500";
   };
 
   if (loading) {
@@ -105,6 +141,86 @@ const InsightCard = ({ mood, insight, loading }) => {
           </p>
         </div>
       </motion.div>
+
+      {/* Stress & Anxiety Scores */}
+      {(stressScore !== undefined || anxietyScore !== undefined) && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {/* Stress Score */}
+          <motion.div
+            whileHover={{ scale: 1.02, y: -5 }}
+            className="peaceful-card p-6"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-4xl">{getScoreEmoji(stressScore)}</span>
+                  <div>
+                    <h4 className="text-sm uppercase tracking-wide text-gray-500 font-medium">
+                      Stress Level
+                    </h4>
+                    <p className={`text-2xl font-light ${getScoreColor(stressScore)}`}>
+                      {stressScore}/100
+                    </p>
+                  </div>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getScoreColor(stressScore)} bg-gray-100`}>
+                  {getScoreLabel(stressScore)}
+                </span>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${stressScore}%` }}
+                  transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
+                  className={`h-full ${getScoreBarColor(stressScore)} rounded-full`}
+                />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Anxiety Score */}
+          <motion.div
+            whileHover={{ scale: 1.02, y: -5 }}
+            className="peaceful-card p-6"
+          >
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-4xl">{getScoreEmoji(anxietyScore)}</span>
+                  <div>
+                    <h4 className="text-sm uppercase tracking-wide text-gray-500 font-medium">
+                      Anxiety Level
+                    </h4>
+                    <p className={`text-2xl font-light ${getScoreColor(anxietyScore)}`}>
+                      {anxietyScore}/100
+                    </p>
+                  </div>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-xs font-medium ${getScoreColor(anxietyScore)} bg-gray-100`}>
+                  {getScoreLabel(anxietyScore)}
+                </span>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${anxietyScore}%` }}
+                  transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
+                  className={`h-full ${getScoreBarColor(anxietyScore)} rounded-full`}
+                />
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
       {/* Insight Card */}
       <motion.div

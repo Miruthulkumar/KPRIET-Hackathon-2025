@@ -3,9 +3,9 @@ import Entry from "../models/Entry.js";
 // Create a new entry
 export const createEntry = async (req, res) => {
   try {
-    const { entryType, content, transcript, mood, insight } = req.body;
+    const { entryType, content, transcript, mood, insight, stressScore, anxietyScore } = req.body;
 
-    if (!entryType || !mood || !insight) {
+    if (!entryType || !mood || !insight || stressScore === undefined || anxietyScore === undefined) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
@@ -27,6 +27,8 @@ export const createEntry = async (req, res) => {
       transcript,
       mood,
       insight,
+      stressScore,
+      anxietyScore,
     });
 
     await entry.save();
