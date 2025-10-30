@@ -8,6 +8,7 @@ import cors from "cors";
 import fs from "fs";
 import analyzeRoutes from "./routes/analyzeRoutes.js";
 import entryRoutes from "./routes/entryRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api", analyzeRoutes);
 app.use("/api/entries", entryRoutes);
+app.use("/api/report", reportRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

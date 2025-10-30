@@ -60,4 +60,15 @@ export const deleteEntry = async (id) => {
   return response.data;
 };
 
+// Generate therapy report
+export const generateReport = async () => {
+  const response = await axios.get(
+    "http://localhost:5001/api/report/generate",
+    {
+      responseType: 'blob', // Important for downloading PDF
+    }
+  );
+  return response.data;
+};
+
 export default api;
