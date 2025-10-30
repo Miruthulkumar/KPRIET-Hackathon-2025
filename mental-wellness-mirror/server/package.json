@@ -1,0 +1,32 @@
+{
+  "name": "mental-wellness-mirror-server",
+  "version": "1.0.0",
+  "description": "Backend API for Mental Wellness Mirror",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "mental-health",
+    "ai",
+    "openai",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.13.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "form-data": "^4.0.0",
+    "mongoose": "^8.0.0",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^4.20.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

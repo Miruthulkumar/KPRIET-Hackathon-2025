@@ -1,0 +1,22 @@
+{
+  "name": "mental-wellness-mirror",
+  "version": "1.0.0",
+  "description": "AI-powered mental wellness journal app",
+  "scripts": {
+    "install-all": "cd server && npm install && cd ../client && npm install",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\"",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "keywords": [
+    "mental-health",
+    "ai",
+    "journal",
+    "wellness"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Calm & Soothing Color Palette */
+  --color-serenity: #e8f4f8;
+  --color-sage: #b8d4c5;
+  --color-lavender: #d4c4e8;
+  --color-peach: #f5d5c8;
+  --color-sky: #c8e3f5;
+  --color-mint: #c8f5e3;
+  --color-warm-gray: #e8e5e0;
+  --color-soft-white: #fdfcfa;
+}
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-[#fdfcfa] via-[#f5f3ef] to-[#e8f4f8];
+    @apply text-gray-700;
+    @apply min-h-screen;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-gray-800;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .peaceful-card {
+    @apply bg-white/80 backdrop-blur-sm rounded-3xl shadow-sm border border-gray-100/50;
+    @apply transition-all duration-300;
+  }
+
+  .peaceful-card:hover {
+    @apply shadow-md border-gray-200/50;
+  }
+
+  .calm-button {
+    @apply px-6 py-3 rounded-full font-medium;
+    @apply transition-all duration-300;
+    @apply shadow-sm;
+  }
+
+  .calm-button-primary {
+    @apply calm-button;
+    @apply bg-gradient-to-r from-[#b8d4c5] to-[#c8e3f5];
+    @apply text-gray-700 hover:text-gray-800;
+    @apply hover:shadow-md;
+  }
+
+  .calm-button-secondary {
+    @apply calm-button;
+    @apply bg-white/90 text-gray-700;
+    @apply hover:bg-white hover:shadow-md;
+  }
+
+  .serene-input {
+    @apply w-full px-4 py-3;
+    @apply bg-white/80 backdrop-blur-sm;
+    @apply border-2 border-gray-100;
+    @apply rounded-2xl;
+    @apply focus:border-[#b8d4c5] focus:outline-none;
+    @apply transition-all duration-300;
+    @apply placeholder-gray-400;
+  }
+
+  .serene-textarea {
+    @apply serene-input resize-none;
+  }
+
+  .peaceful-badge {
+    @apply inline-flex items-center px-3 py-1;
+    @apply rounded-full text-sm font-medium;
+    @apply bg-white/90 text-gray-700;
+    @apply shadow-sm;
+  }
+
+  /* Smooth animations */
+  .fade-in {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .breathe {
+    animation: breathe 4s ease-in-out infinite;
+  }
+
+  @keyframes breathe {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 1;
+    }
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(184, 212, 197, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 212, 197, 0.7);
+}
+
+/* Smooth focus states */
+*:focus-visible {
+  outline: 2px solid rgba(184, 212, 197, 0.5);
+  outline-offset: 2px;
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(212, 196, 232, 0.3);
+  color: inherit;
+}
