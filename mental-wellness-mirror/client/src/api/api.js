@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://localhost:5001/api";
+// Use environment variable or deployed backend URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://haven-backend-24qm.onrender.com/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -21,7 +22,7 @@ export const analyzeVoice = async (audioBlob) => {
   formData.append("audio", audioBlob, "voice-note.webm");
 
   const response = await axios.post(
-    "http://localhost:5001/api/analyze-voice",
+    `${API_BASE_URL}/analyze-voice`,
     formData,
     {
       headers: {
@@ -63,7 +64,7 @@ export const deleteEntry = async (id) => {
 // Generate therapy report
 export const generateReport = async () => {
   const response = await axios.get(
-    "http://localhost:5001/api/report/generate",
+    `${API_BASE_URL}/report/generate`,
     {
       responseType: 'blob', // Important for downloading PDF
     }
