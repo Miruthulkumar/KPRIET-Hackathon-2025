@@ -7,14 +7,9 @@ const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'default-key-change-this-in
 export const isEncrypted = (text) => {
   if (!text || typeof text !== 'string') return false;
   
-  // AES encrypted strings from crypto-js start with "U2FsdGVkX1" (base64 of "Salted__")
-  // or contain special characters that indicate encryption
-  try {
-    // Try to check if it looks like base64 encrypted data
-    return text.startsWith('U2FsdGVkX1') || /^[A-Za-z0-9+/=]+$/.test(text);
-  } catch {
-    return false;
-  }
+  // AES encrypted strings from crypto-js ALWAYS start with "U2FsdGVkX1" (base64 of "Salted__")
+  // This is the most reliable way to detect crypto-js AES encryption
+  return text.startsWith('U2FsdGVkX1');
 };
 
 // Encrypt sensitive data
@@ -39,7 +34,7 @@ export const encrypt = (text) => {
 export const decrypt = (encryptedText) => {
   if (!encryptedText) return encryptedText;
   
-  // If it doesn't look encrypted, return as-is (backward compatibility)
+  // If it doesn't start with the AES prefix, it's plain text - return as-is
   if (!isEncrypted(encryptedText)) {
     return encryptedText;
   }
@@ -48,17 +43,14 @@ export const decrypt = (encryptedText) => {
     const bytes = CryptoJS.AES.decrypt(encryptedText, ENCRYPTION_KEY);
     const decrypted = bytes.toString(CryptoJS.enc.Utf8);
     
-    // If decryption results in empty string, the data might not be encrypted
-    // or wrong key is used - return original
+    // If decryption results in empty string, return original (wrong key or corrupted data)
     if (!decrypted) {
-      console.warn('Decryption resulted in empty string, returning original');
       return encryptedText;
     }
     
     return decrypted;
   } catch (error) {
-    console.error('Decryption error:', error);
-    // Return original text instead of throwing - backward compatibility
+    // Silent fail - return original text for backward compatibility
     return encryptedText;
   }
 };
