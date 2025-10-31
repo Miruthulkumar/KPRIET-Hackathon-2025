@@ -9,6 +9,7 @@ import fs from "fs";
 import analyzeRoutes from "./routes/analyzeRoutes.js";
 import entryRoutes from "./routes/entryRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", analyzeRoutes);
 app.use("/api/entries", entryRoutes);
 app.use("/api/report", reportRoutes);
+app.use("/api/chat", chatRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

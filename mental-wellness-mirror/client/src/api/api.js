@@ -71,4 +71,32 @@ export const generateReport = async () => {
   return response.data;
 };
 
+// Chat API functions
+export const getOrCreateChatSession = async (sessionId) => {
+  const response = await api.get(`/chat/session/${sessionId}`);
+  return response.data;
+};
+
+export const sendChatMessage = async (sessionId, message) => {
+  const response = await api.post(`/chat/session/${sessionId}/message`, {
+    message,
+  });
+  return response.data;
+};
+
+export const getAllChatSessions = async () => {
+  const response = await api.get("/chat/sessions");
+  return response.data;
+};
+
+export const deleteChatSession = async (sessionId) => {
+  const response = await api.delete(`/chat/session/${sessionId}`);
+  return response.data;
+};
+
+export const clearChatHistory = async (sessionId) => {
+  const response = await api.delete(`/chat/session/${sessionId}/history`);
+  return response.data;
+};
+
 export default api;

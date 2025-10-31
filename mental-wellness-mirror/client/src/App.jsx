@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Dashboard from "./pages/Dashboard";
 import JournalPage from "./pages/JournalPage";
 import InsightPage from "./pages/InsightPage";
+import ChatPage from "./pages/ChatPage";
 import LanguageSelector from "./components/LanguageSelector";
 import { useLanguage } from "./context/LanguageContext";
 import { generateReport } from "./api/api";
@@ -99,6 +100,24 @@ function Navigation() {
                 </span>
               </motion.button>
             </Link>
+            
+            {/* Chat Button */}
+            <Link to="/chat">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+                  isActive('/chat')
+                    ? 'bg-gradient-to-r from-[#b8d4c5]/30 to-[#c8e3f5]/30 text-gray-700 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-800 hover:bg-white/80'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <span>💬</span>
+                  <span className="hidden sm:inline">Chat</span>
+                </span>
+              </motion.button>
+            </Link>
 
             {/* Generate Report Button */}
             <motion.button
@@ -147,6 +166,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/journal" element={<JournalPage />} />
             <Route path="/insight/:id" element={<InsightPage />} />
+            <Route path="/chat" element={<ChatPage />} />
           </Routes>
         </main>
         
